@@ -1,0 +1,52 @@
+/* ヘッダー部分のスタイリング */
+.header-wrapper {
+  text-align: center;
+  padding: 20px;
+  height: 40vh; /* コンテナの高さ */
+}
+
+/* 画像のサイズ調整 */
+.header-wrapper img {
+  width: 200px; /* 画像の幅 */
+  height: auto; /* 画像の高さは自動で調整 */
+  margin-bottom: 10px; /* 画像とテキストの間隔 */
+}
+
+/* HSKレベルのボタンスタイル */
+.bodywhole {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平方向の中央揃え */
+  justify-content: center; /* 垂直方向の中央揃え */
+  height: 40vh; /* コンテナの高さをビューポートの高さに合わせる */
+  
+}
+.row {
+  display: flex;
+  justify-content: flex-start; /* アイテムを左端から開始 */
+  margin-bottom: 36px; /* 縦の間隔を36pxに設定 */
+}
+
+.row:last-child {
+  margin-bottom: 0; /* 最後の行の下マージンを0にする */
+}
+
+.bodywhole a {
+  text-decoration: none;
+  color: black; /* リンクのテキスト色 */
+  margin: 10px;
+}
+
+.hsk1, .hsk2, .hsk3, .hsk4, .hsk5, .hsk6 {
+  border: 2px solid black; /* 枠線 */
+  border-radius: 10px; /* 角の丸み */
+  padding: 20px;
+  width: 100px; /* 幅 */
+  text-align: center;
+}
+
+.classstyle {
+  font-size: 1.2em; /* フォントサイズ */
+  font-weight: bold; /* フォントの太さ */
+}
+

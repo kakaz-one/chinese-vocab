@@ -1,0 +1,58 @@
+body{ 
+  font-family: Arial, sans-serif; 
+  text-align: center; /* テキストやインライン要素を中央揃えにする */
+  display: flex; /* Flexboxコンテナを作成 */
+  flex-direction: column; /* 子要素を垂直方向に配置 */
+  align-items: center; /* 水平方向で中央揃え */
+  justify-content: center; /* 垂直方向で中央揃え */
+}
+.question { 
+margin-bottom: 8px; 
+font-size: 28px;
+
+}
+
+
+button { 
+margin-right: 10px;  
+}
+.choices button{
+display: block;
+margin-bottom: 20px;
+display: block;
+width: 2532px;
+padding: 10px;
+margin-bottom: 10px;
+font-size: 20px;
+border: none;
+cursor: pointer; 
+} 
+
+.correct {
+color: red;
+}
+
+.skip {
+ background-color: lightgray;
+ display: block;
+margin-bottom: 20px;
+display: block;
+width: 2532px;
+padding: 10px;
+margin-bottom: 10px;
+font-size: 20px;
+border: none;
+cursor: pointer; 
+}
+.score{
+ padding-top:112px;
+ font-size: 20px;
+
+
+}
+.restart{
+ margin-top:12px;
+ font-size: 20px; 
+}
+
+
