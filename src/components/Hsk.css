@@ -16,21 +16,19 @@ font-size: 28px;
 button { 
 margin-right: 10px;  
 }
-.choices{
-  width: 240px;
- 
+
+
+.choices .choice {
+  display: block; /* ブロックレベル要素として表示し、縦並びになるようにする */
+  width: 240px; /* 幅を240pxに設定 */
+  margin: 8px auto; /* 上下のマージンを8pxに設定し、左右は自動で中央揃えにする */
+  padding: 10px; /* 内部の余白を設定 */
+  border: 1px solid #ccc; /* 枠線を設定 */
+  background-color: #f8f8f8; /* 背景色を設定 */
+  cursor: pointer; /* ホバー時にカーソルをポインタに変更 */
+  border-radius: 10px; /* 角の丸み */
+
 }
-.choices button{
-display: block;
-margin-bottom: 20px;
-display: block;
-width: 2532px;
-padding: 10px;
-margin-bottom: 10px;
-font-size: 20px;
-border: none;
-cursor: pointer; 
-} 
 
 .correct {
 color: red;
@@ -41,7 +39,7 @@ color: red;
  display: block;
 margin-bottom: 20px;
 display: block;
-width: 2532px;
+width: 240px; /* 幅を240pxに設定 */
 padding: 10px;
 margin-bottom: 10px;
 font-size: 20px;
