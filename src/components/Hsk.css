@@ -16,6 +16,10 @@ font-size: 28px;
 button { 
 margin-right: 10px;  
 }
+.choices{
+  width: 240px;
+ 
+}
 .choices button{
 display: block;
 margin-bottom: 20px;
