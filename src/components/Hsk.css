@@ -27,11 +27,16 @@ margin-right: 10px;
   background-color: #f8f8f8; /* 背景色を設定 */
   cursor: pointer; /* ホバー時にカーソルをポインタに変更 */
   border-radius: 10px; /* 角の丸み */
-
+  transition: background-color 0.3s ease;
 }
 
-.correct {
-color: red;
+
+.choice.correct {
+  background-color: #90ee90; /* 黄緑色 */
+}
+
+.choice.incorrect {
+  background-color: #ffcccb; /* 赤色 */
 }
 
 .skip {
@@ -53,6 +58,7 @@ cursor: pointer;
 
 }
 .restart{
+  display: block; /* ブロックレベル要素として表示し、縦並びになるようにする */
  margin-top:12px;
  font-size: 20px; 
 }
