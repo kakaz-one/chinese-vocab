@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/chinese-vocab/static/css/main.4cc975e2.css",
-    "main.js": "/chinese-vocab/static/js/main.1a39eee5.js",
+    "main.js": "/chinese-vocab/static/js/main.59201876.js",
     "static/js/453.2aa858ee.chunk.js": "/chinese-vocab/static/js/453.2aa858ee.chunk.js",
     "static/media/shigureni-studygirl.png": "/chinese-vocab/static/media/shigureni-studygirl.ee459262b65852b58407.png",
     "index.html": "/chinese-vocab/index.html",
     "main.4cc975e2.css.map": "/chinese-vocab/static/css/main.4cc975e2.css.map",
-    "main.1a39eee5.js.map": "/chinese-vocab/static/js/main.1a39eee5.js.map",
+    "main.59201876.js.map": "/chinese-vocab/static/js/main.59201876.js.map",
     "453.2aa858ee.chunk.js.map": "/chinese-vocab/static/js/453.2aa858ee.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4cc975e2.css",
-    "static/js/main.1a39eee5.js"
+    "static/js/main.59201876.js"
   ]
 }
