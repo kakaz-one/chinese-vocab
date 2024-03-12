@@ -158,73 +158,89 @@ const Hsk1 = () => {
     ["152","1","する","做","zuò"],
     ["153","1","座る","坐","zuò"],
       ];
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [score, setScore] = useState(0);
-  const totalQuestions = 10;
-
-  const shuffleOptions = (correctOption) => {
-    let options = [correctOption];
-    while (options.length < 4) {
-      let option = data[Math.floor(Math.random() * data.length)][2];
-      if (!options.includes(option)) {
-        options.push(option);
-      }
-    }
-    return options.sort(() => 0.5 - Math.random());
-  };
-
-  const nextQuestion = () => {
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-  };
-
-  const checkAnswer = (selected, correct) => {
-    if (selected === correct) {
-      setScore(score + 1);
-      alert('正解です！');
-    } else {
-      alert(`不正解です。正解は ${correct} です。`);
-    }
-    nextQuestion();
-  };
-
-  const restartQuiz = () => {
-    setCurrentQuestionIndex(0);
-    setScore(0);
-  };
-
-  if (currentQuestionIndex >= totalQuestions) {
-    return (
-      <div className="quiz-container">
-        <div className="score">スコア: {score}/{totalQuestions}</div>
-        <button className="restart" onClick={restartQuiz}>テストをやり直す</button>
-        <a className="gohome" href="/mypagehome">ホームに戻る</a>
-      </div>
-    );
-  }
-
-  const question = data[currentQuestionIndex];
-  const [id, hskClass, japanese, chinese, pinyin] = question;
-  const options = shuffleOptions(japanese);
-
-  return (
-    <div className="quiz-container">
-      <div className="progress">問題 {currentQuestionIndex + 1}/{totalQuestions}</div>
-      <div className="question" >
-        <p>{pinyin}</p>
-        <p>{chinese}</p>
-      </div>
-      <div className="choices">
-        {options.map((option, index) => (
-          <button key={index} className="choice" onClick={() => checkAnswer(option, japanese)}>
-            {option}
-          </button>
-        ))}
-      </div>
-      <button className="skip" onClick={nextQuestion}>分からない</button>
+      const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+      const [score, setScore] = useState(0);
+      const [selectedOption, setSelectedOption] = useState('');
+      const [showAnswer, setShowAnswer] = useState(false);
+      const totalQuestions = 10; // またはテストしたい問題数
+    
+      const shuffleOptions = (correctOption) => {
+        let options = [correctOption];
+        while (options.length < 4) {
+          let option = data[Math.floor(Math.random() * data.length)][2];
+          if (!options.includes(option)) {
+            options.push(option);
+          }
+        }
+        return options.sort(() => 0.5 - Math.random());
+      };
+    
+      const nextQuestion = () => {
+        if (currentQuestionIndex < totalQuestions - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedOption('');
+          setShowAnswer(false);
+        } else {
+          // クイズが最後まで完了したときの処理
+          alert(`クイズ終了！ スコア: ${score}/${totalQuestions}`);
+        }
+      };
+    
+      const checkAnswer = (option) => {
+        if (option === data[currentQuestionIndex][2]) {
+          if (!showAnswer) {
+            setScore(score + 1); // スコアを更新
+          }
+          setShowAnswer(true); // 正解の選択肢を表示
+        } else {
+          setShowAnswer(true); // 不正解を示す
+        }
+        setSelectedOption(option);
+        // 一定時間後に次の問題へ自動移行
+        setTimeout(() => {
+          nextQuestion();
+        }, 1000); // 1秒後に次へ
+      };
+    
+      const restartQuiz = () => {
+        setCurrentQuestionIndex(0);
+        setScore(0);
+        setSelectedOption('');
+        setShowAnswer(false);
+      };
+    
+      const question = data[currentQuestionIndex];
+      const options = shuffleOptions(question[2]);
+    
+      return (
+        <div className="quiz-container">
+          <div className="progress">問題 {currentQuestionIndex + 1} / {totalQuestions}</div>
+          <div className="question">
+            <p>{question[4]} - {question[3]}</p> {/* Pinyin and Chinese */}
+          </div>
+          <div className="choices">
+            {options.map((option, index) => (
+              <button
+                key={index}
+                className={`choice ${showAnswer ? (option === question[2] ? 'correct' : (option === selectedOption ? 'incorrect' : '')) : ''}`}
+                onClick={() => checkAnswer(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          <button className="skip" onClick={nextQuestion}>分からない</button>
       <button className="restart" onClick={restartQuiz} style={{ display: 'none' }}>テストをやり直す</button>
       <a className="gohome" href="/mypagehome" >ホームに戻る</a>
-    </div>
-  );
-};
 
-export default Hsk1;
+          {showAnswer && (
+            <button onClick={nextQuestion} className="next-question">次へ</button>
+          )}
+          <div className="score-section">
+            スコア: {score} / {totalQuestions}
+          </div>
+        </div>
+      );
+    };
+    
+    export default Hsk1;
