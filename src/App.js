@@ -26,16 +26,16 @@ function App() {
     <div className="container">
       <BrowserRouter>
         <Routes>
-          <Route path={`${process.env.PUBLIC_URL}/register/`} element={<Register />} />
-          <Route path={`${process.env.PUBLIC_URL}/`} element={<Login />} />
-          <Route path={`${process.env.PUBLIC_URL}/mypagehome`} element={<Mypagehome />} />
-          <Route path={`${process.env.PUBLIC_URL}/my-page`} element={<Mypage />} />
-          <Route path={`${process.env.PUBLIC_URL}/Hsk1`} element={<Hsk1 />} />
-          <Route path={`${process.env.PUBLIC_URL}/Hsk2`} element={<Hsk2 />} />
-          <Route path={`${process.env.PUBLIC_URL}/Hsk3`} element={<Hsk3 />} />
-          <Route path={`${process.env.PUBLIC_URL}/Hsk4`} element={<Hsk4 />} />
-          <Route path={`${process.env.PUBLIC_URL}/Hsk5`} element={<Hsk5 />} />
-          <Route path={`${process.env.PUBLIC_URL}/Hsk6`} element={<Hsk6 />} />
+          <Route path={`/register/`} element={<Register />} />
+          <Route path={`/`} element={<Login />} />
+          <Route path={`/mypagehome`} element={<Mypagehome />} />
+          <Route path={`/my-page`} element={<Mypage />} />
+          <Route path={`/Hsk1`} element={<Hsk1 />} />
+          <Route path={`/Hsk2`} element={<Hsk2 />} />
+          <Route path={`/Hsk3`} element={<Hsk3 />} />
+          <Route path={`/Hsk4`} element={<Hsk4 />} />
+          <Route path={`/Hsk5`} element={<Hsk5 />} />
+          <Route path={`/Hsk6`} element={<Hsk6 />} />
         </Routes>
       </BrowserRouter>
     </div>
