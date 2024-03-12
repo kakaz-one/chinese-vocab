@@ -24,10 +24,9 @@
     "postbuild": "cp ./build/index.html ./build/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run rm && npm run build && npm run mv && npm run git",
+    "deploy": "npm run rm && npm run build && npm run mv",
     "rm": "rm -rf docs",
-    "mv": "mv build docs",
-    "git": "git add . && git commit && git push origin main"
+    "mv": "mv build docs"
   },
   "eslintConfig": {
     "extends": [
