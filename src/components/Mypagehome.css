@@ -50,3 +50,23 @@
   font-weight: bold; /* フォントの太さ */
 }
 
+@media screen and (max-width: 480px) {
+  .header-wrapper {
+    height: 240px; /* コンテナの高さ */
+    padding-bottom: 8px;
+  }
+.supplement{
+  top: 240px;
+  margin-top: 8px;
+  padding-top: 16px;
+}
+  img {
+    width: 150px; /* 画像の幅 */
+    
+  }
+  .bodywhole {
+    height: 50vh; /* コンテナの高さ */
+    bottom: 24px;
+  }
+  
+}

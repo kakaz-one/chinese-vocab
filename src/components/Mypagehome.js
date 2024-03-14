@@ -32,10 +32,11 @@ const Mypagehome = () => {
           ) : (
             <>
               <div className="header-wrapper">
-                <h1>中国語を勉強しよう！</h1>
-                <img src={Studygirl} alt="studygirl" width={200} height={200} />
-                <p>HSKは数ある中国語検定の中でも、中国政府公認の資格です</p>
-              </div>
+                <h1 className="title">中国語を勉強しよう！</h1>
+                <img src={Studygirl} alt="studygirl"  />
+                </div>
+                <p className="supplement">HSKは数ある中国語検定の中でも、中国政府公認の資格です</p>
+              
               <div className="bodywhole">
                 <div className="row">
                   <a href="/Hsk1">
