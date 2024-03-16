@@ -25,22 +25,26 @@ const Createhsk1DB = () => {
   ];
 
   useEffect(() => {
-    HSK1.forEach(async (item) => {
-      const docRef = doc(collection(db, "HSK1"));
-      await setDoc(docRef, item)
-        .then(() => {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch((error) => {
-          console.error("Error adding document: ", error);
-        });
-    });
+    const addData = async () => {
+      const promises = HSK1.map((item, index) => {
+        const docRef = doc(collection(db, "HSK1"), `item-${index}`);
+        return setDoc(docRef, item);
+      });
+
+      try {
+        await Promise.all(promises);
+        console.log("All documents were successfully written.");
+      } catch (error) {
+        console.error("Error adding documents: ", error);
+      }
+    };
+
+    addData();
   }, []);
 
   return (
     <div>
-      <h1>Firestoreにデータを追加しました
-      </h1>
+      <h1>Firestoreにデータを追加しました</h1>
     </div>
   );
 };
