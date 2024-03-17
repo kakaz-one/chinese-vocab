@@ -53,7 +53,7 @@ const Mypage = () => {
 
                   <p className="Mypage-email">{user?.email}</p>
 
-                  <button className="mypage-bottom" onClick={logout}>Logout</button>
+                  <button className="mypage-bottom" onClick={logout}>ログアウト</button>
                 </div>
               </div>
             </>
