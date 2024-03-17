@@ -48,7 +48,7 @@ const Mypage = () => {
                 </div>
                 <div className="account-information-container">
                   <div className="footer-item">
-                    <p>Account Info<br />-----------------</p>
+                    <p>アカウント情報<br />-----------------</p>
                   </div>
 
                   <p className="Mypage-email">{user?.email}</p>

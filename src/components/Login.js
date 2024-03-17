@@ -57,11 +57,11 @@ const Login = () => {
         <Navigate to={`/mypagehome`} />
       ) : (
         <>
-          <h1 className="account-title">Login</h1>
+          <h1 className="account-title">ログイン画面</h1>
           <div className="input-main">
             <form className="account-form" onSubmit={handleSubmit}>
               <div>
-                <label className="input-mail">Mail Address</label>
+                <label className="input-mail">メールアドレス</label>
                 <input
                   className="input-form"
                   name="email"
@@ -71,7 +71,7 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label className="input-pass">Password</label>
+                <label className="input-pass">パスワード</label>
                 <input
                   className="input-form"
                   name="password"
@@ -92,8 +92,8 @@ const Login = () => {
                   />
                 )}
               </div>
-              <button className="create-button">Login</button>
-              <p><Link className="go-register" to={`/register/`}>Click here to register</Link></p>
+              <button className="create-button">ログイン</button>
+              <p><Link className="go-register" to={`/register/`}>アカウントを作成</Link></p>
             </form>
           </div>
         </>
