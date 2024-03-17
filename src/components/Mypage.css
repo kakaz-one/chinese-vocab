@@ -14,7 +14,7 @@
   width: 90vw;
   height: 50vh;
   padding: 20px;
-  background-color: #FAF3E0;
+  background-color: #c0f7b3;
   border: 3px #735240 solid;
   border-radius: 20px;
 }
@@ -34,7 +34,7 @@
   align-items: center;
   padding: 15px 25px 15px;
   display: inline-flex;
-  background-color: #FAF3E0;
+  background-color: whitesmoke;
   font-size: 16px;
 }
 

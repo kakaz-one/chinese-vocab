@@ -57,11 +57,11 @@ const Register = () => {
         <Navigate to={`/`} />
       ) : (
         <>
-          <h1 className="account-title">Register</h1>
+          <h1 className="account-title">登録</h1>
           <div className="input-main">
             <form className="account-form" onSubmit={handleSubmit}>
               <div>
-                <label className="input-mail">Mail Address</label>
+                <label className="input-mail">メールアドレス</label>
                 <input
                   className="input-form"
                   name="email"
@@ -71,7 +71,7 @@ const Register = () => {
                 />
               </div>
               <div>
-                <label className="input-pass">Password</label>
+                <label className="input-pass">パスワード</label>
                 <input
                   className="input-form"
                   name="password"
@@ -92,7 +92,7 @@ const Register = () => {
                   />
                 )}
               </div>
-              <button className="create-button">Register</button>
+              <button className="create-button">会員登録</button>
             </form>
           </div>
         </>
