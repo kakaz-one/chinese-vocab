@@ -7,6 +7,9 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Mypagehome from "./components/Mypagehome";
 import Mypage from "./components/Mypage";
+import CreateHSK1DB from "./components/deta/CreateDBhsk1";
+import HSK1test from "./components/test/hsk1test";
+import HSK1test2 from "./components/test/hsk1test2";
 import Hsk1 from './components/Hsk1';
 import Hsk2 from './components/Hsk2';
 import Hsk3 from './components/Hsk3';
@@ -36,6 +39,9 @@ function App() {
           <Route path={`/Hsk4`} element={<Hsk4 />} />
           <Route path={`/Hsk5`} element={<Hsk5 />} />
           <Route path={`/Hsk6`} element={<Hsk6 />} />
+          <Route path={`/createHSK1DB`} element={<CreateHSK1DB />} />
+          <Route path={`/hsk1test`} element={<HSK1test />} />
+          <Route path={`/hsk1test2`} element={<HSK1test2 />} />
         </Routes>
       </BrowserRouter>
     </div>
