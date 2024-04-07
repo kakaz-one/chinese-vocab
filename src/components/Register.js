@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from "react";
 import '../normalize.css'
 import './LoginRegister.css'
-
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged
 } from "firebase/auth";
 import { auth } from "../FirebaseConfig.js";
+import { doc, setDoc } from "firebase/firestore"; // Firestoreを操作するために追加
+import { db } from "../FirebaseConfig.js"; // Firestoreインスタンスのimportが必要です
 import { Navigate } from "react-router-dom";
 
-// パスワード表示切替アイコン
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
 
 const Register = () => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [passwordType, setPasswordType] = useState("password");
+  const [user, setUser] = useState(""); // state変数「user」を定義
 
-  // 3秒後に非表示に切り替える関数
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+  }, []);
+
   const visibilityChange = (type) => {
     setPasswordType(type);
     setTimeout(() => {
@@ -29,27 +34,23 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         registerEmail,
         registerPassword
       );
+      // ユーザー作成が成功したら、Firestoreにユーザードキュメントを作成
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        email: registerEmail,
+        createdAt: new Date() // Firestoreのタイムスタンプではなく、JSのDateオブジェクトを使用
+      });
+      console.log("ユーザードキュメント作成成功");
     } catch (error) {
+      console.error("会員登録失敗", error);
       alert("Password must be at least 6 characters.");
     }
   };
-
-  /* ↓state変数「user」を定義 */
-  const [user, setUser] = useState("");
-
-  /* ↓ログインしているかどうかを判定する */
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-  }, []);
 
   return (
     <>
@@ -97,8 +98,8 @@ const Register = () => {
           </div>
         </>
       )}
-    </>
-  );
+    </>  
+    );
 };
 
 export default Register;
