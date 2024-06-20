@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { updateDoc, increment } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import "./hsk1test.css";
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
-// Firestoreの初期化
+// FirestoreとAuthenticationの初期化
 const db = getFirestore();
+const auth = getAuth();
 
 class Hsk1Flashcard extends Component {
   constructor() {
@@ -15,16 +16,56 @@ class Hsk1Flashcard extends Component {
     this.state = {
       cards: [], // カードのデータ
       currentCardIndex: 0, // 現在表示しているカードのインデックス
+      userId: null, // ユーザーID
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    // ユーザー認証状態の監視
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.setState({ userId: user.uid });
+        this.fetchCards();
+      } else {
+        console.log('User is not signed in');
+      }
+    });
+  }
+
+  async fetchCards() {
     const q = query(collection(db, "HSK1"), where("id", ">=", 1), where("id", "<=", 10));
     const querySnapshot = await getDocs(q);
     const cards = querySnapshot.docs.map(doc => ({...doc.data(), showFront: true}));
     this.setState({ cards });
   }
 
+  // FirestoreのNOMコレクションにデータを追加
+  addToNOMCollection = async () => {
+    if (this.state.userId && this.state.cards.length > 0) {
+      const currentCard = this.state.cards[this.state.currentCardIndex];
+      const nomCollection = collection(db, "NOM");
+      const q = query(nomCollection, where("userid", "==", this.state.userId), where("id", "==", currentCard.id));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        await addDoc(nomCollection, {
+          userid: this.state.userId,
+          id: currentCard.id,
+          state: 1
+        });
+        console.log('Added to NOM collection with state 1');
+      } else {
+        const docRef = querySnapshot.docs[0].ref;
+        await updateDoc(docRef, {
+          state: increment(1)
+        });
+        console.log('Incremented state by 1 in existing NOM document');
+      }
+      this.nextCard(); // 次のカードへ移動
+    }
+  }
+  
+  
   toggleCard = () => {
     this.setState(prevState => ({
       cards: prevState.cards.map((card, i) => 
@@ -33,19 +74,26 @@ class Hsk1Flashcard extends Component {
     }));
   }
 
-  // 現在のカードのインデックスをインクリメント
+
+
+
   nextCard = () => {
     this.setState(prevState => ({
       currentCardIndex: prevState.currentCardIndex + 1,
     }));
-  }
+  } 
 
-  // 現在のカードのインデックスをデクリメント
+  
+  /*
   prevCard = () => {
     this.setState(prevState => ({
       currentCardIndex: prevState.currentCardIndex - 1,
     }));
   }
+
+
+*/
+
 
   renderCards() {
     const { cards, currentCardIndex } = this.state;
@@ -70,11 +118,21 @@ class Hsk1Flashcard extends Component {
           )}
         </div>
       </div>  
-      <Stack direction="row" spacing={2}>
-        <Button variant="outlined" color="error">覚えていない</Button>
-        {currentCardIndex > 0 && <ArrowCircleLeftIcon fontSize="large" onClick={this.prevCard} />}
-        {currentCardIndex < cards.length - 1 && <ArrowCircleRightIcon fontSize="large" onClick={this.nextCard} />}
-        <Button variant="contained" color="success">覚えてる</Button>   
+      <Stack direction="row" spacing={14}>
+        <Button variant="outlined" color="error" onClick={this.addToNOMCollection}>覚えていない</Button>
+
+        {/*}
+        {currentCardIndex > 0 && (
+          <ArrowCircleLeftIcon fontSize="large" onClick={() => this.prevCard()} />
+        )}
+        {currentCardIndex < cards.length - 1 && (
+          <ArrowCircleRightIcon fontSize="large" onClick={() => this.nextCard()} />
+        )}        
+
+        */}
+
+
+        <Button variant="contained" color="success" onClick={() => this.nextCard()}>覚えてる</Button>   
       </Stack>
     </>    );
   }

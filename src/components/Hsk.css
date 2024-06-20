@@ -63,4 +63,10 @@ cursor: pointer;
  font-size: 20px; 
 }
 
+.next{
+  display: block; /* ブロックレベル要素として表示し、縦並びになるようにする */
+ margin-top:12px;
+ font-size: 20px; 
+}
+
 

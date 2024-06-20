@@ -1,68 +1,127 @@
 import React, { Component } from 'react';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebase/firestore';
+import { updateDoc, increment } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import "./hsk1test.css";
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
-
-// Firestoreの初期化
+// FirestoreとAuthenticationの初期化
 const db = getFirestore();
+const auth = getAuth();
 
 class Hsk1Flashcard extends Component {
   constructor() {
     super();
     this.state = {
-      cards: [], // カードのデータと各カードの表示状態を含む
+      cards: [], // カードのデータ
+      currentCardIndex: 0, // 現在表示しているカードのインデックス
+      userId: null, // ユーザーID
     };
   }
 
-  async componentDidMount() {
-    // Firestoreからidフィールドが1から10の範囲にあるドキュメントを全て取得
+  componentDidMount() {
+    // ユーザー認証状態の監視
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.setState({ userId: user.uid });
+        this.fetchCards();
+      } else {
+        console.log('User is not signed in');
+      }
+    });
+  }
+
+  async fetchCards() {
     const q = query(collection(db, "HSK1"), where("id", ">=", 1), where("id", "<=", 10));
     const querySnapshot = await getDocs(q);
-
-    // カードのデータに表示状態(showFront: true)を追加
     const cards = querySnapshot.docs.map(doc => ({...doc.data(), showFront: true}));
     this.setState({ cards });
   }
 
-  toggleCard = (index) => {
+  // FirestoreのNOMコレクションにデータを追加
+  addToNOMCollection = async () => {
+    if (this.state.userId && this.state.cards.length > 0) {
+      const currentCard = this.state.cards[this.state.currentCardIndex];
+      const nomCollection = collection(db, "NOM");
+      const q = query(nomCollection, where("userid", "==", this.state.userId), where("id", "==", currentCard.id));
+      const querySnapshot = await getDocs(q);
+  
+      if (querySnapshot.empty) {
+        // ドキュメントが存在しない場合、新しいドキュメントを作成
+        await addDoc(nomCollection, {
+          userid: this.state.userId,
+          id: currentCard.id,
+          state: 1
+        });
+        console.log('Added to NOM collection with state 1');
+      } else {
+        // ドキュメントが存在する場合、state フィールドの値を1増やす
+        const docRef = querySnapshot.docs[0].ref;
+        await updateDoc(docRef, {
+          state: increment(1)
+        });
+        console.log('Incremented state by 1 in existing NOM document');
+      }
+    }
+  }
+  
+  toggleCard = () => {
     this.setState(prevState => ({
       cards: prevState.cards.map((card, i) => 
-        i === index ? {...card, showFront: !card.showFront} : card
+        i === prevState.currentCardIndex ? {...card, showFront: !card.showFront} : card
       )
     }));
   }
 
+  nextCard = () => {
+    this.setState(prevState => ({
+      currentCardIndex: prevState.currentCardIndex + 1,
+    }));
+  }
+  
+  prevCard = () => {
+    this.setState(prevState => ({
+      currentCardIndex: prevState.currentCardIndex - 1,
+    }));
+  }
+  
   renderCards() {
-    const { cards } = this.state;
+    const { cards, currentCardIndex } = this.state;
 
     if (cards.length === 0) return <p>Loading...</p>;
 
-    return cards.map((card, index) => (
+    const card = cards[currentCardIndex];
+
+    return (
       <>
-      <div key={index} onClick={() => this.toggleCard(index)}  className="flashcard" >
-        {card.showFront ? (
-            <div className="flashcard-front">
-
-             <p className='japanese'>{card.japanese}</p>
-             
+      <div className="card-wrapper" onClick={this.toggleCard}>
+        <div className="card-body">
+          {card.showFront ? (
+            <div className="card-front">
+              <p className='japanese'>{card.japanese}</p>
             </div>
-        ) : (
-          <>
-            <div className="flashcard-back">
-
-             <p className='chinese'>{card.chinese}</p>
-             <p>{card.pinyin}</p>
-
+          ) : (
+            <div className="card-back">
+              <p className='chinese'>{card.chinese}</p>
+              <p>{card.pinyin}</p>
             </div>
-          </>
-        )}
+          )}
+        </div>
       </div>  
-      <ArrowCircleLeftIcon  fontSize="large"/>
-      <ArrowCircleRightIcon fontSize="large"/>
-      </>
-    ));
+      <Stack direction="row" spacing={2}>
+        <Button variant="outlined" color="error" onClick={this.addToNOMCollection}>覚えていない</Button>
+        {currentCardIndex > 0 && (
+          <ArrowCircleLeftIcon fontSize="large" onClick={() => this.prevCard()} />
+        )}
+        {currentCardIndex < cards.length - 1 && (
+          <ArrowCircleRightIcon fontSize="large" onClick={() => this.nextCard()} />
+        )}        
+        <Button variant="contained" color="success">覚えてる</Button>   
+      </Stack>
+    </>    );
   }
 
   render() {

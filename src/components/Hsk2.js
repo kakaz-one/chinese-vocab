@@ -1,177 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../FirebaseConfig'; // Firebase設定ファイルをインポート
 import "./Hsk.css";
 
-
-const Hsk2 = () => {
-  const data = [
-    ["154","2","でしょ？","吧","ba"],
-    ["155","2","白","白","bái"],
-    ["156","2","百","百","bǎi"],
-    ["157","2","助ける","帮助","bāngzhù"],
-    ["158","2","新聞","报纸","bàozhǐ"],
-    ["159","2","比較して","比","bǐ"],
-    ["160","2","しないでください","别","bié"],
-    ["161","2","長い","长","zhǎng"],
-    ["162","2","歌を歌う","唱歌","chànggē"],
-    ["163","2","出る","出","chū"],
-    ["164","2","着る","穿","chuān"],
-    ["165","2","船","船","chuán"],
-    ["166","2","次","次","cì"],
-    ["167","2","〜から","从","cóng"],
-    ["168","2","間違う","错","cuò"],
-    ["169","2","バスケットボールをする","打篮球","dǎ lánqiú"],
-    ["170","2","みんな","大家","dàjiā"],
-    ["171","2","しかし","但是","dànshì"],
-    ["172","2","〜へ","到","dào"],
-    ["173","2","得る","得","dé"],
-    ["174","2","待つ","等","děng"],
-    ["175","2","弟","弟弟","dìdì"],
-    ["176","2","最初の","第一","dì yī"],
-    ["177","2","分かった","懂","dǒng"],
-    ["178","2","正しい","对","duì"],
-    ["179","2","部屋","房间","fángjiān"],
-    ["180","2","非常に","非常","fēicháng"],
-    ["181","2","店員","服务员","fúwùyuán"],
-    ["182","2","高い","高","gāo"],
-    ["183","2","伝える","告诉","gàosù"],
-    ["184","2","兄","哥哥","gēgē"],
-    ["185","2","与える","给","gěi"],
-    ["186","2","バス","公共汽车","gōnggòng qìchē"],
-    ["187","2","kg キログラム","公斤","gōngjīn"],
-    ["188","2","会社","公司","gōngsī"],
-    ["189","2","値段が高い","贵","guì"],
-    ["190","2","過ぎる","过","guò"],
-    ["191","2","さらに","还","hái"],
-    ["192","2","子供","孩子","háizi"],
-    ["193","2","美味しい","好吃","hào chī"],
-    ["194","2","番号","号","hào"],
-    ["195","2","黒","黑","hēi"],
-    ["196","2","赤","红","hóng"],
-    ["197","2","歓迎する","欢迎","huānyíng"],
-    ["198","2","答える","回答","huídá"],
-    ["199","2","空港","机场","jīchǎng"],
-    ["200","2","卵","鸡蛋","jīdàn"],
-    ["201","2","着（上着類の数を数える）","件","jiàn"],
-    ["202","2","教室","教室","jiàoshì"],
-    ["203","2","お姉ちゃん","姐姐","jiějiě"],
-    ["204","2","紹介する","介绍","jièshào"],
-    ["205","2","入る","进","jìn"],
-    ["206","2","近い","近","jìn"],
-    ["207","2","すぐに","就","jiù"],
-    ["208","2","思う、感じる","觉得","juédé"],
-    ["209","2","コーヒー","咖啡","kāfēi"],
-    ["210","2","始める","开始","kāishǐ"],
-    ["211","2","試験","考试","kǎoshì"],
-    ["212","2","かもしれない","可能","kěnéng"],
-    ["213","2","できる","可以","kěyǐ"],
-    ["214","2","授業","课","kè"],
-    ["215","2","速い","快","kuài"],
-    ["216","2","幸せ","快乐","kuàilè"],
-    ["217","2","疲れる","累","lèi"],
-    ["218","2","〜から","离","lí"],
-    ["219","2","二つ","两","liǎng"],
-    ["220","2","道路","路","lù"],
-    ["221","2","旅行","旅游","lǚyóu"],
-    ["222","2","売る","卖","mài"],
-    ["223","2","遅い","慢","màn"],
-    ["224","2","忙しい","忙","máng"],
-    ["225","2","それぞれ、各々","每","měi"],
-    ["226","2","妹","妹妹","mèimei"],
-    ["227","2","扉","门","mén"],
-    ["228","2","男","男人","nánrén"],
-    ["229","2","あなた（敬語）","您","nín"],
-    ["230","2","牛乳","牛奶","niúnǎi"],
-    ["231","2","女","女人","nǚrén"],
-    ["232","2","隣","旁边","pángbiān"],
-    ["233","2","走る","跑步","pǎobù"],
-    ["234","2","安い","便宜","piányí"],
-    ["235","2","チケット","票","piào"],
-    ["236","2","妻","妻子","qīzi"],
-    ["237","2","起きる","起床","qǐchuáng"],
-    ["238","2","千","千","qiān"],
-    ["239","2","明確な","晴","qíng"],
-    ["240","2","昨年","去年","qùnián"],
-    ["241","2","させる","让","ràng"],
-    ["242","2","出勤する","上班","shàngbān"],
-    ["243","2","体","身体","shēntǐ"],
-    ["244","2","病気になる","生病","shēngbìng"],
-    ["245","2","誕生日","生日","shēngrì"],
-    ["246","2","時間","时间","shíjiān"],
-    ["247","2","事","事情","shìqíng"],
-    ["248","2","腕時計","手表","shǒubiǎo"],
-    ["249","2","携帯電話","手机","shǒujī"],
-    ["250","2","送る、届ける","送","sòng"],
-    ["251","2","だから","所以","suǒyǐ"],
-    ["252","2","それは","它","tā"],
-    ["253","2","サッカーをする","踢足球","tī zúqiú"],
-    ["254","2","書き記す","题","tí"],
-    ["255","2","ダンス","跳舞","tiàowǔ"],
-    ["256","2","外","外","wài"],
-    ["257","2","完成する","完","wán"],
-    ["258","2","遊ぶ","玩","wán"],
-    ["259","2","夜","晚上","wǎnshàng"],
-    ["260","2","なぜ","为什么","wèishéme"],
-    ["261","2","尋ねる","问","wèn"],
-    ["262","2","問題","问题","wèntí"],
-    ["263","2","スイカ","西瓜","xī guā"],
-    ["264","2","望む","希望","xīwàng"],
-    ["265","2","洗う","洗","xǐ"],
-    ["266","2","へ","向","xiàng"],
-    ["267","2","時間","小时","xiǎoshí"],
-    ["268","2","笑う","笑","xiào"],
-    ["269","2","新しい","新","xīn"],
-    ["270","2","姓、名字","姓","xìng"],
-    ["271","2","休憩","休息","xiūxí"],
-    ["272","2","雪","雪","xuě"],
-    ["273","2","色","颜色","yánsè"],
-    ["274","2","目","眼睛","yǎnjīng"],
-    ["275","2","羊肉","羊肉","yángròu"],
-    ["276","2","薬","药","yào"],
-    ["277","2","要求する","要","yào"],
-    ["278","2","さらに","也","yě"],
-    ["279","2","もう既に","已经","yǐjīng"],
-    ["280","2","一緒に","一起","yīqǐ"],
-    ["281","2","意味","意思","yìsi"],
-    ["282","2","陰","阴","yīn"],
-    ["283","2","なぜなら","因为","yīnwèi"],
-    ["284","2","泳ぐ","游泳","yóuyǒng"],
-    ["285","2","右","右边","yòubiān"],
-    ["286","2","魚","鱼","yú"],
-    ["287","2","中国のお金の単位","元","yuán"],
-    ["288","2","遠い","远","yuǎn"],
-    ["289","2","運動","运动","yùndòng"],
-    ["290","2","再び","再","zài"],
-    ["291","2","朝","早上","zǎoshang"],
-    ["292","2","枚","张","zhāng"],
-    ["293","2","夫","丈夫","zhàngfū"],
-    ["294","2","探す","找","zhǎo"],
-    ["295","2","着る","着","zhe"],
-    ["296","2","本当に","真","zhēn"],
-    ["297","2","まさに〜している","正在","zhèng zài"],
-    ["298","2","知っている","知道","zhīdào"],
-    ["299","2","準備をする","准备","zhǔnbèi"],
-    ["300","2","自転車","自行车","zìxíngchē"],
-    ["301","2","歩く","走","zǒu"],
-    ["302","2","最も","最","zuì"],
-    ["303","2","左","左边","zuǒbiān"],
-    ["304","2","昨日","昨天","zuótiān"],
-    ["305","2","する","做","zuò"],
-    ["306","2","座る","坐","zuò"],	
-          ];
+const Hsk2MCQ = () => {
+  const [data, setData] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [questions, setQuestions] = useState([]);
   const totalQuestions = 10;
 
-  const shuffleOptions = (correctOption) => {
+  const shuffleOptions = useCallback((correctOption, data) => {
+    if (!data || data.length === 0) {
+      return [];
+    }
+
     let options = [correctOption];
     while (options.length < 4) {
-      let option = data[Math.floor(Math.random() * data.length)][2];
+      let option = data[Math.floor(Math.random() * data.length)].japanese;
       if (!options.includes(option)) {
         options.push(option);
       }
     }
     return options.sort(() => 0.5 - Math.random());
-  };
+  }, []);
+
+  const generateQuestions = useCallback((data) => {
+    if (!data || data.length === 0) {
+      return;
+    }
+
+    const newQuestions = [];
+    for (let i = 0; i < totalQuestions; i++) {
+      const randomQuestion = data[Math.floor(Math.random() * data.length)];
+      newQuestions.push({
+        ...randomQuestion,
+        options: shuffleOptions(randomQuestion.japanese, data),
+      });
+    }
+    setQuestions(newQuestions);
+  }, [shuffleOptions]);
+
+  const fetchData = useCallback(async () => {
+    const q = query(collection(db, 'HSK'), where('hskclass', '==', 2));
+    const querySnapshot = await getDocs(q);
+    const fetchedData = querySnapshot.docs.map(doc => doc.data());
+    setData(fetchedData);
+    if (fetchedData.length > 0) {
+      generateQuestions(fetchedData);
+    }
+  }, [generateQuestions]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const nextQuestion = () => {
     setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -192,24 +74,34 @@ const Hsk2 = () => {
     setScore(0);
   };
 
+  const nextQuiz = () => {
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    generateQuestions(data);
+  };
+
+  if (data.length === 0 || questions.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   if (currentQuestionIndex >= totalQuestions) {
     return (
       <div className="quiz-container">
         <div className="score">スコア: {score}/{totalQuestions}</div>
         <button className="restart" onClick={restartQuiz}>テストをやり直す</button>
+        <button className="next" onClick={nextQuiz}>次へ</button>
         <a className="gohome" href="/mypagehome">ホームに戻る</a>
       </div>
     );
   }
 
-  const question = data[currentQuestionIndex];
-  const [id, hskClass, japanese, chinese, pinyin] = question;
-  const options = shuffleOptions(japanese);
+  const question = questions[currentQuestionIndex];
+  const { japanese, chinese, pinyin, options } = question;
 
   return (
     <div className="quiz-container">
       <div className="progress">問題 {currentQuestionIndex + 1}/{totalQuestions}</div>
-      <div className="question" >
+      <div className="question">
         <p>{pinyin}</p>
         <p>{chinese}</p>
       </div>
@@ -221,10 +113,9 @@ const Hsk2 = () => {
         ))}
       </div>
       <button className="skip" onClick={nextQuestion}>分からない</button>
-      <button className="restart" onClick={restartQuiz} style={{ display: 'none' }}>テストをやり直す</button>
-      <a className="gohome" href="/mypagehome" >ホームに戻る</a>
+      <a className="gohome" href="/mypagehome">ホームに戻る</a>
     </div>
   );
 };
 
-export default Hsk2;
+export default Hsk2MCQ;
