@@ -3,6 +3,8 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../FirebaseConfig'; // Firebase設定ファイルをインポート
 import "./Hsk.css";
 
+
+
 const Hsk1MCQ = () => {
   const [data, setData] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -100,20 +102,22 @@ const Hsk1MCQ = () => {
 
   return (
     <div className="quiz-container">
-      <div className="progress">問題 {currentQuestionIndex + 1}/{totalQuestions}</div>
+      <div className="progress" style={{ fontFamily: 'Hanatochouchou' }}>問題 {currentQuestionIndex + 1}/{totalQuestions}</div>
       <div className="question">
-        <p>{pinyin}</p>
-        <p>{chinese}</p>
+        <p className='cwTeXKai'>{pinyin}</p>
+        <p className='cwTeXKai'>{chinese}</p>
       </div>
       <div className="choices">
+      
         {options.map((option, index) => (
-          <button key={index} className="choice" onClick={() => checkAnswer(option, japanese)}>
+          <button key={index} className="choice"  style={{ fontFamily: 'Hanatochouchou' }} onClick={() => checkAnswer(option, japanese)}>
             {option}
           </button>
+      
         ))}
       </div>
-      <button className="skip" onClick={nextQuestion}>分からない</button>
-      <a className="gohome" href="/mypagehome">ホームに戻る</a>
+      <button className="skip" onClick={nextQuestion} style={{ fontFamily: 'Hanatochouchou' }}>分からない</button>
+      <a className="gohome" href="/mypagehome" style={{ fontFamily: 'Hanatochouchou' }}>ホームに戻る</a>
     </div>
   );
 };

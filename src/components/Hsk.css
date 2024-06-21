@@ -28,6 +28,8 @@ margin-right: 10px;
   cursor: pointer; /* ホバー時にカーソルをポインタに変更 */
   border-radius: 10px; /* 角の丸み */
   transition: background-color 0.3s ease;
+  font-size: 24px;
+
 }
 
 
@@ -68,5 +70,26 @@ cursor: pointer;
  margin-top:12px;
  font-size: 20px; 
 }
+
+/* src/App.css */
+.handwritten-font {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+
+@import url(http://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+.cwTeXKai{
+    font-family: 'cwTeXKai', serif;
+    font-weight: normal;
+    font-size: 2.4rem;
+}
+@font-face {
+  font-family: 'Hanatochouchou';
+  src: url('./fonts/花とちょうちょ.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-size: 2rem;
+}
+
 
 
