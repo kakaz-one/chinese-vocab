@@ -1,0 +1,29 @@
+/* ヘッダー部分のスタイリング */
+.header-wrapper {
+  text-align: center;
+  padding: 20px;
+  height: 40vh; /* コンテナの高さ */
+}
+
+/* 画像のサイズ調整 */
+.header-wrapper img {
+  width: 200px; /* 画像の幅 */
+  height: auto; /* 画像の高さは自動で調整 */
+  margin-bottom: 10px; /* 画像とテキストの間隔 */
+}
+
+/* HSKレベルのボタンスタイル */
+.bodywholeMCQandFC {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 水平方向の中央揃え */
+  justify-content: center; /* 垂直方向の中央揃え */
+  height: 10vh; /* コンテナの高さをビューポートの高さに合わせる */
+  
+}
+
+.bodywholeMCQandFC a {
+  text-decoration: none;
+  color: black; /* リンクのテキスト色 */
+  margin: 10px;
+}

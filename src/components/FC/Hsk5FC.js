@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, Stack, TableHead, TableRow, Button, Circul
 const db = getFirestore();
 const auth = getAuth();
 
-class Hsk1Flashcard extends Component {
+class Hsk5Flashcard extends Component {
   constructor() {
     super();
     this.state = {
@@ -35,7 +35,7 @@ class Hsk1Flashcard extends Component {
   }
 
   async fetchCards() {
-    const q = query(collection(db, "HSK"), where("hskclass", "==", 1));
+    const q = query(collection(db, "HSK"), where("hskclass", "==", 5));
     const querySnapshot = await getDocs(q);
     let cards = querySnapshot.docs.map(doc => ({...doc.data(), showFront: true}));
     
@@ -248,4 +248,4 @@ class Hsk1Flashcard extends Component {
   }
 }
 
-export default Hsk1Flashcard;
+export default Hsk5Flashcard;

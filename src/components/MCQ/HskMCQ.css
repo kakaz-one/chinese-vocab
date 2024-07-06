@@ -1,0 +1,95 @@
+body{ 
+  font-family: Arial, sans-serif; 
+  text-align: center; /* テキストやインライン要素を中央揃えにする */
+  display: flex; /* Flexboxコンテナを作成 */
+  flex-direction: column; /* 子要素を垂直方向に配置 */
+  align-items: center; /* 水平方向で中央揃え */
+  justify-content: center; /* 垂直方向で中央揃え */
+}
+.question { 
+margin-bottom: 8px; 
+font-size: 28px;
+
+}
+
+
+button { 
+margin-right: 10px;  
+}
+
+
+.choices .choice {
+  display: block; /* ブロックレベル要素として表示し、縦並びになるようにする */
+  width: 240px; /* 幅を240pxに設定 */
+  margin: 8px auto; /* 上下のマージンを8pxに設定し、左右は自動で中央揃えにする */
+  padding: 10px; /* 内部の余白を設定 */
+  border: 1px solid #ccc; /* 枠線を設定 */
+  background-color: #f8f8f8; /* 背景色を設定 */
+  cursor: pointer; /* ホバー時にカーソルをポインタに変更 */
+  border-radius: 10px; /* 角の丸み */
+  transition: background-color 0.3s ease;
+  font-size: 24px;
+
+}
+
+
+.choice.correct {
+  background-color: #90ee90; /* 黄緑色 */
+}
+
+.choice.incorrect {
+  background-color: #ffcccb; /* 赤色 */
+}
+
+.skip {
+ background-color: lightgray;
+ display: block;
+margin-bottom: 20px;
+display: block;
+width: 240px; /* 幅を240pxに設定 */
+padding: 10px;
+margin-bottom: 10px;
+font-size: 20px;
+border: none;
+cursor: pointer; 
+}
+.score{
+ padding-top:112px;
+ font-size: 20px;
+
+
+}
+.restart{
+  display: block; /* ブロックレベル要素として表示し、縦並びになるようにする */
+ margin-top:12px;
+ font-size: 20px; 
+}
+
+.next{
+  display: block; /* ブロックレベル要素として表示し、縦並びになるようにする */
+ margin-top:12px;
+ font-size: 20px; 
+}
+
+/* src/App.css */
+.handwritten-font {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+
+@import url(http://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+.cwTeXKai{
+    font-family: 'cwTeXKai', serif;
+    font-weight: normal;
+    font-size: 2.4rem;
+}
+@font-face {
+  font-family: 'Hanatochouchou';
+  src: url('../fonts/花とちょうちょ.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-size: 2rem;
+}
+
+
+

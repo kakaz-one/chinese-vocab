@@ -5,8 +5,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Toolbar, TableSortLabel } from '@mui/material';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import BottomNavigation from '@mui/material/BottomNavigation';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import FilterNoneIcon from '@mui/icons-material/FilterNone';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import AppBar from '@mui/material/AppBar';
@@ -26,7 +24,7 @@ const CustomTabs = styled(Tabs)({
   },
 });
 
-const TestTable = () => {
+const Vocablist = () => {
   const [data, setData] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [order, setOrder] = useState('asc');
@@ -163,4 +161,4 @@ const TestTable = () => {
   );
 }
 
-export default TestTable;
+export default Vocablist;
