@@ -3,8 +3,6 @@ import { getFirestore, collection, query, where, getDocs, addDoc } from 'firebas
 import { updateDoc, increment } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import "./hsk1test.css";
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
@@ -48,9 +46,8 @@ class Hsk1Flashcard extends Component {
       const nomCollection = collection(db, "NOM");
       const q = query(nomCollection, where("userid", "==", this.state.userId), where("id", "==", currentCard.id));
       const querySnapshot = await getDocs(q);
-  
+
       if (querySnapshot.empty) {
-        // ドキュメントが存在しない場合、新しいドキュメントを作成
         await addDoc(nomCollection, {
           userid: this.state.userId,
           id: currentCard.id,
@@ -58,15 +55,16 @@ class Hsk1Flashcard extends Component {
         });
         console.log('Added to NOM collection with state 1');
       } else {
-        // ドキュメントが存在する場合、state フィールドの値を1増やす
         const docRef = querySnapshot.docs[0].ref;
         await updateDoc(docRef, {
           state: increment(1)
         });
         console.log('Incremented state by 1 in existing NOM document');
       }
+      this.nextCard(); // 次のカードへ移動
     }
   }
+  
   
   toggleCard = () => {
     this.setState(prevState => ({
@@ -76,18 +74,27 @@ class Hsk1Flashcard extends Component {
     }));
   }
 
+
+
+
   nextCard = () => {
     this.setState(prevState => ({
       currentCardIndex: prevState.currentCardIndex + 1,
     }));
-  }
+  } 
+
   
+  /*
   prevCard = () => {
     this.setState(prevState => ({
       currentCardIndex: prevState.currentCardIndex - 1,
     }));
   }
-  
+
+
+*/
+
+
   renderCards() {
     const { cards, currentCardIndex } = this.state;
 
@@ -111,15 +118,21 @@ class Hsk1Flashcard extends Component {
           )}
         </div>
       </div>  
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={14}>
         <Button variant="outlined" color="error" onClick={this.addToNOMCollection}>覚えていない</Button>
+
+        {/*}
         {currentCardIndex > 0 && (
           <ArrowCircleLeftIcon fontSize="large" onClick={() => this.prevCard()} />
         )}
         {currentCardIndex < cards.length - 1 && (
           <ArrowCircleRightIcon fontSize="large" onClick={() => this.nextCard()} />
         )}        
-        <Button variant="contained" color="success">覚えてる</Button>   
+
+        */}
+
+
+        <Button variant="contained" color="success" onClick={() => this.nextCard()}>覚えてる</Button>   
       </Stack>
     </>    );
   }
