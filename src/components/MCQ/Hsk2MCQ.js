@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { collection, getDocs, query, where, setDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, setDoc, doc, getDoc, updateDoc,} from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from '../../FirebaseConfig'; // Firebase設定ファイルをインポート
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, CircularProgress, Box, Typography } from '@mui/material';
 import './HskMCQ.css';
+
 
 const Hsk2MCQ = () => {
   const [data, setData] = useState([]);
@@ -13,6 +14,10 @@ const Hsk2MCQ = () => {
   const [incorrectWords, setIncorrectWords] = useState([]);
   const [correctWords, setCorrectWords] = useState([]);
   const [userId, setUserId] = useState('');
+  const [showCircle, setShowCircle] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [correctOption, setCorrectOption] = useState(null);
+  const [circleColor, setCircleColor] = useState('');
   const totalQuestions = 10;
 
   const shuffleOptions = useCallback((correctOption, data) => {
@@ -104,6 +109,9 @@ const Hsk2MCQ = () => {
   };
 
   const nextQuestion = () => {
+    setShowCircle(false);
+    setSelectedOption(null);
+    setCorrectOption(null);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
 
@@ -111,13 +119,19 @@ const Hsk2MCQ = () => {
     if (selected === correct) {
       setScore(score + 1);
       setCorrectWords([...correctWords, question]);
-      alert('正解です！');
+      setSelectedOption(selected);
+      setCircleColor('yellowgreen');
+      setShowCircle(true);
+      setTimeout(() => nextQuestion(), 500);
     } else {
       setIncorrectWords([...incorrectWords, question]);
       await updateMistake(question.id);
-      alert(`不正解です。正解は ${correct} です。`);
+      setSelectedOption(selected);
+      setCorrectOption(correct);
+      setCircleColor('red');
+      setShowCircle(true);
+      setTimeout(() => nextQuestion(), 500);
     }
-    nextQuestion();
   };
 
   const nextQuiz = () => {
@@ -169,7 +183,7 @@ const Hsk2MCQ = () => {
         </Box>
         <Button variant="contained" color="primary" onClick={nextQuiz}>次へ</Button>
 
-        <h4>覚えていない単語</h4>
+        <h4 style={{ color: 'red' }}>覚えていない単語</h4>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -192,7 +206,7 @@ const Hsk2MCQ = () => {
           </Table>
         </TableContainer>
 
-        <h4>覚えている単語</h4>
+        <h4 style={{ color: 'yellowgreen' }}>覚えている単語</h4>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -225,13 +239,40 @@ const Hsk2MCQ = () => {
   return (
     <div className="quiz-container">
       <div className="progress" style={{ fontFamily: 'Hanatochouchou' }}>問題 {currentQuestionIndex + 1}/{totalQuestions}</div>
-      <div className="question">
+      <div className="question" style={{ position: 'relative' }}>
+        {showCircle && circleColor === 'yellowgreen' && (
+          <div style={{
+            width: '150px',
+            height: '150px',
+            border: `20px solid ${circleColor}`,
+            borderRadius: '50%',
+            position: 'absolute',
+            top: '50px',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}></div>
+        )}
+        {showCircle && circleColor === 'red' && (
+          <div style={{
+            width: '150px',
+            height: '150px',
+            color: 'red',
+            fontSize: '300px',
+            position: 'absolute',
+            top: '0px',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}>×</div>
+        )}
         <p className='cwTeXKai'>{pinyin}</p>
         <p className='cwTeXKai'>{chinese}</p>
       </div>
       <div className="choices">
         {options.map((option, index) => (
-          <button key={index} className="choice" style={{ fontFamily: 'Hanatochouchou' }} onClick={() => checkAnswer(option, japanese, question)}>
+          <button key={index} className="choice" style={{
+            fontFamily: 'Hanatochouchou',
+            backgroundColor: selectedOption === option ? (circleColor === 'red' ? 'darkgray' : 'yellowgreen') : (correctOption === option ? 'yellowgreen' : '')
+          }} onClick={() => checkAnswer(option, japanese, question)}>
             {option}
           </button>
         ))}

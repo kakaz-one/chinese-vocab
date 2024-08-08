@@ -1,0 +1,20 @@
+@import url(https://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+.cwTeXKai{
+    font-family: 'cwTeXKai', serif;
+    font-weight: normal;
+    font-size: 2.4rem;
+}
+@font-face {
+  font-family: 'Hanatochouchou';
+  src: url('../fonts/花とちょうちょ.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-size: 2rem;
+}
+
+.noto-serif-sc {
+  font-family: "Noto Serif SC", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}

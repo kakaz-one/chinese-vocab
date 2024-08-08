@@ -1,6 +1,6 @@
 body{ 
-  font-family: Arial, sans-serif; 
-  text-align: center; /* テキストやインライン要素を中央揃えにする */
+  font-family: 'Noto Sans JP', sans-serif;
+    text-align: center; /* テキストやインライン要素を中央揃えにする */
   display: flex; /* Flexboxコンテナを作成 */
   flex-direction: column; /* 子要素を垂直方向に配置 */
   align-items: center; /* 水平方向で中央揃え */
@@ -73,8 +73,7 @@ cursor: pointer;
 
 /* src/App.css */
 .handwritten-font {
-  font-family: 'Noto Sans SC', sans-serif;
-}
+  font-family: 'Noto Sans JP', sans-serif;}
 
 
 @import url(https://fonts.googleapis.com/earlyaccess/cwtexkai.css);
