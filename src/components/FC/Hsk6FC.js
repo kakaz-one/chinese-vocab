@@ -131,18 +131,19 @@ class Hsk6Flashcard extends Component {
         <div className="card-body">
           {card.showFront ? (
             <div className="card-front">
-              <p className='japanese'>{card.japanese}</p>
-            </div>
-          ) : (
-            <div className="card-back">
-              <p className='chinese'>{card.chinese}</p>
-              <p>{card.pinyin}</p>
-            </div>
-          )}
+            <p className='note-serif-jp' style={{fontSize: "42px"}}>{card.japanese}</p>
+          </div>
+        ) : (
+          <div className="card-back">
+            <p className="cwTeXKai" >{card.pinyin}</p>
+            <p className="noto-serif-sc" style={{fontSize: "32px"}}>{card.chinese}</p>
+
+          </div>
+      )}
         </div>
       </div>  
       <Stack direction="row" spacing={14}>
-        <Button variant="outlined" color="error" onClick={this.addToNOMFCCollection}>覚えていない</Button>
+        <Button variant="contained" color="error" onClick={this.addToNOMFCCollection}>覚えていない</Button>
         <Button variant="contained" color="success" onClick={this.markAsKnown}>覚えてる</Button>   
       </Stack>
     </>    );

@@ -132,12 +132,12 @@ class Hsk1Flashcard extends Component {
         <div className="card-body">
           {card.showFront ? (
             <div className="card-front">
-              <p className='japanese' style={{ fontFamily: 'Hanatochouchou',  fontSize: "42px"}}>{card.japanese}</p>
+              <p className='note-serif-jp' style={{fontSize: "42px"}}>{card.japanese}</p>
             </div>
           ) : (
             <div className="card-back">
-              <p className='noto-serif-sc'style={{ fontSize: "32px"}}>{card.pinyin}</p>
-              <p className='noto-serif-sc' style={{ fontSize: "42px"}}>{card.chinese}</p>
+              <p className="cwTeXKai" >{card.pinyin}</p>
+              <p className="noto-serif-sc" style={{fontSize: "32px"}}>{card.chinese}</p>
 
             </div>
           )}

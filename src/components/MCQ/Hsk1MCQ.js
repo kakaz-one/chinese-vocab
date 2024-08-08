@@ -264,8 +264,8 @@ const Hsk1MCQ = () => {
             transform: 'translate(-50%, -50%)'
           }}>×</div>
         )}
-        <p className='cwTeXKai'>{pinyin}</p>
-        <p className='cwTeXKai'>{chinese}</p>
+        <p className='cwTeXKai' style={{fontSize:"24px"}}>{pinyin}</p>
+        <p className='Noto Serif SC'>{chinese}</p>
       </div>
       <div className="choices">
         {options.map((option, index) => (
