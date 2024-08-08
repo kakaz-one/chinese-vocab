@@ -241,7 +241,7 @@ class Hsk2Flashcard extends Component {
 
     return (
       <div>
-        <h1>HSK1 Flashcard</h1>
+        <h1>HSK2 Flashcard</h1>
         <div className="progress" >{currentCardIndex + 1}/{totalQuestions}</div>
         {showResults ? this.renderResults() : this.renderCards()}
       </div>
