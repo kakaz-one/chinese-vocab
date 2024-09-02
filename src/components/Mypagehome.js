@@ -29,8 +29,15 @@ const Mypagehome = () => {
             <Container maxWidth="md">
                 <h1 className="title">中国語を勉強しよう！</h1>
                 <img src={Studygirl} alt="studygirl"  />
-                <p className="supplement">HSKは数ある中国語検定の中でも、中国政府公認の資格です</p>              <Box sx={{ mt: 4 }}>
+                             <Box sx={{ mt: 4 }}>
                 <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12} sm={12} md={12}>
+                    <a href="/my-page" style={{ textDecoration: 'none' }}>
+                    <Box className="hsk">
+                      <div className="classstyle">マイページ</div>                      
+                      </Box>
+                    </a>
+                  </Grid>
                   <Grid item xs={6} sm={6} md={6}>
                     <a href="/Hsk1MCQandFC" style={{ textDecoration: 'none' }}>
                       <Box className="hsk">
