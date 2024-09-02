@@ -15,7 +15,7 @@
   height: 50vh;
   padding: 20px;
   background-color: white;
-  border: 3px #735240 solid;
+  border: 3px black solid;
   border-radius: 20px;
 }
 
@@ -29,7 +29,7 @@
 
 .mypage-bottom {
   border-radius: 25px;
-  border: 2px #735240 solid;
+  border: 2px black solid;
   justify-content: center;
   align-items: center;
   padding: 15px 25px 15px;
@@ -39,7 +39,7 @@
 }
 
 .mypage-bottom:hover {
-  background-color: #735240;
+  background-color: black;
   color: #FAF3E0;
   cursor: pointer;
 }
