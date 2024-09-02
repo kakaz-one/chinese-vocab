@@ -242,8 +242,8 @@ const Hsk3MCQ = () => {
       <div className="question" style={{ position: 'relative' }}>
         {showCircle && circleColor === 'yellowgreen' && (
           <div style={{
-            width: '150px',
-            height: '150px',
+            width: '90px',
+            height: '90px',
             border: `20px solid ${circleColor}`,
             borderRadius: '50%',
             position: 'absolute',
@@ -257,15 +257,15 @@ const Hsk3MCQ = () => {
             width: '150px',
             height: '150px',
             color: 'red',
-            fontSize: '300px',
+            fontSize: '150px',
             position: 'absolute',
-            top: '0px',
+            top: '20px',
             left: '50%',
             transform: 'translate(-50%, -50%)'
           }}>×</div>
         )}
-        <p className='cwTeXKai'>{pinyin}</p>
-        <p className='cwTeXKai'>{chinese}</p>
+        <p className='cwTeXKai' style={{fontSize:"24px"}}>{pinyin}</p>
+        <p className='Noto Serif SC'>{chinese}</p>
       </div>
       <div className="choices">
         {options.map((option, index) => (
@@ -277,7 +277,12 @@ const Hsk3MCQ = () => {
           </button>
         ))}
       </div>
-      <Button variant="contained" onClick={nextQuestion} style={{ fontFamily: 'Hanatochouchou' }}>分からない</Button>
+      <Button 
+      variant="contained" 
+      onClick={() => checkAnswer(null, question.japanese, question)}  
+      style={{ fontFamily: 'Hanatochouchou' }}>
+        分からない
+      </Button>
     </div>
   );
 };
