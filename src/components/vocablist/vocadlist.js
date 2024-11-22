@@ -145,7 +145,9 @@ const Vocablist = () => {
           <TableBody>
             {data.map((item, index) => (
               <TableRow key={index}>
-                <TableCell>{item.state}</TableCell>
+                <TableCell>
+                  <span style={{ color: 'red', fontWeight: 'bold' }}>{item.state}</span>
+                </TableCell>
                 <TableCell>
                   <small>{item.pinyin}</small>
                   <br />
