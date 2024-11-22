@@ -31,13 +31,14 @@ const Mypagehome = () => {
                 <img src={Studygirl} alt="studygirl"  />
                              <Box sx={{ mt: 4 }}>
                 <Grid container spacing={2} justifyContent="center">
-                <Grid item xs={12} sm={12} md={12}>
-                    <a href="/my-page" style={{ textDecoration: 'none' }}>
+              {/* <Grid item xs={12} sm={12} md={12}>
+
+                  <a href="/my-page" style={{ textDecoration: 'none' }}>
                     <Box className="hsk">
                       <div className="classstyle">マイページ</div>                      
                       </Box>
                     </a>
-                  </Grid>
+                  </Grid>*/}  
                   <Grid item xs={6} sm={6} md={6}>
                     <a href="/Hsk1MCQandFC" style={{ textDecoration: 'none' }}>
                       <Box className="hsk">
